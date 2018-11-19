@@ -9,11 +9,21 @@ const getAll = (req, res, next) => {
 }
 const getOne = (req, res, next) => {
     let rank = req.params.rank
-    return knex('mountain')
-        .select('*')
-        .where({rank: rank})
-        .then(mountain => res.json({mountain}))
-        .catch(err => console.log('ERROR: ', err))
+    if(!Number(rank)){
+        res.json({error: 'Please enter a valid rank number'})
+    } else {
+        return knex('mountain')
+            .select('*')
+            .where({rank: rank})
+            .then(mountain => {
+                if(!mountain.length){
+                    return res.json({error: 'That rank doesn\'t exist yet'})
+                } else {
+                    return res.json({mountain})
+                }
+            })
+            .catch(err => console.log('ERROR: ', err))
+    }
 }
 // const postMountain = (req, res, next) => {
     
