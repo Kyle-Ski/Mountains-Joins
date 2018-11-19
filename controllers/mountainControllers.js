@@ -31,11 +31,18 @@ const postMountain = (req, res, next) => {
         .insert(body)
         .returning('*')
         .then(mountain => res.json({mountain: mountain[0]}))
+        .catch(err => console.log('ERROR: ', err))
 }
-// const putMountain = (req, res, next) => {
-    
-//     return knex
-// }
+const putMountain = (req, res, next) => {
+    const id = req.params.id
+    const body = req.body
+    return knex('mountain')
+        .where('id', id)
+        .update(body)
+        .returning('*')
+        .then(eddited => res.json({eddited: eddited[0]}))
+        .catch(err => console.log('ERROR: ', err))
+}
 const deleteMountain = (req, res, next) => {
     const id = req.params.id
     return knex('mountain')
@@ -50,6 +57,6 @@ module.exports = {
     getAll,
     getOne,
     postMountain,
-    // putMountain,
+    putMountain,
     deleteMountain
 }
