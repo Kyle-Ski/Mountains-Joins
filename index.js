@@ -3,13 +3,16 @@ const app = express()
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const port = process.env.PORT || 3111
-
+const mountainRoutes = require('./routes/mountainRoutes')
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cors())
 
-
+app.get('/', (req, res, next) => res.json({
+    "Mountains": `http://localhost:${port}/mountains`
+}))
+app.use('/mountains', mountainRoutes)
 
 
 
