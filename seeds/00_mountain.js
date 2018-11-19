@@ -1,7 +1,7 @@
 
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
-  return knex('mountain').del()
+  return knex.raw('DELETE FROM "mountain"; ALTER SEQUENCE mountain_id_seq RESTART WITH 11;')
     .then(function () {
       // Inserts seed entries
       return knex('mountain').insert([
