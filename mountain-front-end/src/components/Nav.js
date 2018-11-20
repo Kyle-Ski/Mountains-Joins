@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import logo from '../logo.svg'
-
+import AddMountain from './AddMountain'
 class Nav extends Component {
 
     state={
         add: false
     }
 
-    addMountain = () => {
+    addMountain = (e) => {
+        e.preventDefault()
         this.setState({add: !this.state.add})
     }
 
@@ -18,8 +19,8 @@ class Nav extends Component {
                 <p>
                     Edit <code>src/App.js</code> and save to reload.
                 </p>
-                <button onClick={this.addMountain}>Click Me</button>
-                {this.state.add ? <p>Am I showing?</p> : ''}
+                <button className='add-mountain' onClick={this.addMountain}>{this.state.add ? 'Collapse Form': 'Add Mountain'}</button>
+                {this.state.add ? <AddMountain /> : ''}
             </header>
         )
     }
