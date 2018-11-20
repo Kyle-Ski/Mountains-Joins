@@ -9,7 +9,7 @@ class App extends Component {
 
   state = {
     mountains: [],
-    newMountains: [{name: '', elevation: 0, range: '', rank: 0, imageUrl: ''}]
+    newMountains: [{name: '', elevation: '', range: '', rank: '', imageUrl: ''}]
   }
 
   async componentDidMount(){
@@ -63,21 +63,22 @@ class App extends Component {
       
   handleSubmit = (evt) => {
       evt.preventDefault()
-      const { newMountains } = this.state;
+      const thingsToAdd  = this.state.newMountains;
+      const data = JSON.stringify(thingsToAdd.map(item => (item)))
+      console.log(data)
       fetch(`${url}/mountains`, {
           method: 'POST',
           mode: 'cors',
           headers: {
               "Content-Type": "application/json; charset=utf-8"
           },
-          body: JSON.stringify(newMountains)
+          body: data
       })
           .then(response => response.json())
-          .then(addingMountains => this.setState({mountains: [...this.state.mountains, addingMountains.mountain]}))
-      alert(`Incorporated: with ${newMountains.length} shareholders`);
+          .then(addingMountains => this.setState({mountains: this.state.mountains.concat(addingMountains.mountain)}))
   }
 
-  handleAddShareholder = (e) => {
+  handleAddMountain = (e) => {
       e.preventDefault()
       this.setState({
       newMountains: this.state.newMountains.concat([{name: '', elevation: '', range: '', imageUrl: ''}])
@@ -107,7 +108,7 @@ class App extends Component {
           handleMountainImgChange={this.handleMountainImgChange}
           handleMountainRankChange={this.handleMountainRankChange}
           handleSubmit={this.handleSubmit}
-          handleAddShareholder={this.handleAddShareholder}
+          handleAddMountain={this.handleAddMountain}
           newMountains={this.state.newMountains}
           handleRemoveMountain={this.handleRemoveMountain}
         />

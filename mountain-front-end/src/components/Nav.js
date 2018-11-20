@@ -26,7 +26,7 @@ class Nav extends Component {
                     handleMountainImgChange={this.props.handleMountainImgChange}
                     handleMountainRankChange={this.props.handleMountainRankChange}
                     handleSubmit={this.props.handleSubmit}
-                    handleAddShareholder={this.props.handleAddShareholder}
+                    handleAddMountain={this.props.handleAddMountain}
                     newMountains={this.props.newMountains}
                     handleRemoveMountain={this.props.handleRemoveMountain}
                 /> 

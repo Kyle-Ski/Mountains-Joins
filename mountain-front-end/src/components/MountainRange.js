@@ -5,7 +5,6 @@ const MountainRange = ({mountains}) => {
 
     const loadMountains = (list) => {
         return list.map((mountain, i) => {
-            console.log(mountain)
             return (
                 <Mountain key={i} 
                     mountain={mountain} 

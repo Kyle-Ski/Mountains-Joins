@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
-const AddMountain = ({handleRemoveMountain, newMountains, handleMountainNameChange, handleMountainElevationChange, handleMountainRangeChange, handleMountainImgChange, handleMountainRankChange, handleSubmit, handleAddShareholder}) => {
+const AddMountain = ({handleRemoveMountain, newMountains, handleMountainNameChange, handleMountainElevationChange, handleMountainRangeChange, handleMountainImgChange, handleMountainRankChange, handleSubmit, handleAddMountain}) => {
 
         return (
             <div>
-                <button className='add-mountain' onClick={handleAddShareholder}>+ Another Mountain</button>
+                <button className='add-mountain' onClick={handleAddMountain}>+ Another Mountain</button>
                 {/* <button className='add-mountain' onClick={consoleL}>console log new mountains</button> */}
                 <form onSubmit={handleSubmit} >
             {newMountains.map((mountain, idx)=>(

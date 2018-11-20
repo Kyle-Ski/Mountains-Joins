@@ -28,18 +28,10 @@ const getOne = (req, res, next) => {
 const postMountain = (req, res, next) => {
     const body = req.body
     return knex('mountain')
-        .where('name', req.body.name)
-        .then(user => {
-            if(!user.length){
-                knex('mountain')
-                .insert(body)
-                .returning('*')
-                .then(mountain => res.json({mountain: mountain[0]}))
-                .catch(err => console.log('ERROR: ', err))        
-            } else {
-                res.json({error: 'ERROR: mountain name already exists'})
-            }
-        })
+        .insert(body)
+        .returning('*')
+        .then(mountain => res.json({mountain: mountain}))
+        .catch(err => console.log('ERROR: ', err))
 }
 const putMountain = (req, res, next) => {
     const id = req.params.id
