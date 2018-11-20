@@ -55,9 +55,10 @@ class AddMountain extends Component {
         });
     }
 
-    handleRemoveShareholder = (idx) => () => {
+    handleRemoveMountain = (idx) => (e) => {
+        e.preventDefault()
         this.setState({
-        shareholders: this.state.shareholders.filter((s, sidx) => idx !== sidx)
+        newMountains: this.state.newMountains.filter((s, sidx) => idx !== sidx)
         });
     }
     
@@ -89,16 +90,21 @@ class AddMountain extends Component {
     render(){
         return (
             <div>
-            {this.state.newMountains.map((mountain, idx)=>(<form onSUbmit={this.handleSubmit} className='add-m-form'>
-                <input onChange={this.handleMountainNameChange/*(idx)*/} placeholder={`Mountain${idx + 1} Name`} value={mountain.name}/>
-                <label>Elevation:</label>
-                <input onChange={this.handleMountainElevationChange/*(idx)*/} type='number' min='0' value={mountain.elevation}/>
-                <input onChange={this.handleMountainRangeChange/*(idx)*/} placeholder='Range' value={mountain.range}/>
-                <input onChange={this.handleMountainImgChange/*(idx)*/} placeholder='Image URL' value={mountain.imageUrl}/>
-            </form>))}
-                <button onClick={this.handleAddShareholder/*(idx)*/}>+ Another Mountain</button>
-                <button>Add Mountains</button>
-                <button onClick={this.consoleL}>console log new mountains</button>
+            <div className='button-group'>
+                <button className='add-mountain' onClick={this.handleAddShareholder}>+ Another Mountain</button>
+                <button className='add-mountain'>Add Mountains</button>
+                <button className='add-mountain' onClick={this.consoleL}>console log new mountains</button>
+            </div>
+            {this.state.newMountains.map((mountain, idx)=>(
+                <form onSUbmit={this.handleSubmit} className='add-m-form'>
+                    <input onChange={this.handleMountainNameChange(idx)} placeholder={`Mountain${idx + 1} Name`} value={mountain.name}/>
+                    <label>Elevation:</label>
+                    <input onChange={this.handleMountainElevationChange(idx)} type='number' min='0' value={mountain.elevation}/>
+                    <input onChange={this.handleMountainRangeChange(idx)} placeholder='Range' value={mountain.range}/>
+                    <input onChange={this.handleMountainImgChange(idx)} placeholder='Image URL' value={mountain.imageUrl}/>
+                    <button className='minus-mountain' onClick={this.handleRemoveMountain(idx)}>-</button>
+                </form>
+            ))}
                 </div>
                 
                 
