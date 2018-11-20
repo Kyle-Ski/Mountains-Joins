@@ -20,7 +20,7 @@ class Nav extends Component {
                     Edit <code>src/App.js</code> and save to reload.
                 </p>
                 <button className='add-mountain' onClick={this.addMountain}>{this.state.add ? 'Collapse Form': 'Add Mountain'}</button>
-                {this.state.add ? <AddMountain /> : ''}
+                <AddMountain /> 
             </header>
         )
     }
