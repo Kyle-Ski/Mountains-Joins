@@ -30,7 +30,13 @@ const postMountain = (req, res, next) => {
     return knex('mountain')
         .insert(body)
         .returning('*')
-        .then(mountain => res.json({mountain: mountain}))
+        .then(mountain => {
+            if(mountain.length === 1){
+                return res.json({mountain: mountain[0]})
+            } else {
+                return res.json({mountain: mountain})
+            }
+        })
         .catch(err => console.log('ERROR: ', err))
 }
 const putMountain = (req, res, next) => {

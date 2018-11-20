@@ -65,7 +65,6 @@ class App extends Component {
       evt.preventDefault()
       const thingsToAdd  = this.state.newMountains;
       const data = JSON.stringify(thingsToAdd.map(item => (item)))
-      console.log(data)
       fetch(`${url}/mountains`, {
           method: 'POST',
           mode: 'cors',
