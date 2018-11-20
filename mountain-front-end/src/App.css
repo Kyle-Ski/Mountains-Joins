@@ -28,6 +28,11 @@
   align-items: center;
 }
 
+.input-group {
+  border-radius: 5px;
+  border: 2px solid #80D8F7;
+}
+
 .button-group {
   display: flex;
   flex-direction: row;

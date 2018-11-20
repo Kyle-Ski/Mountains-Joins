@@ -19,8 +19,17 @@ class Nav extends Component {
                 <p>
                     Edit <code>src/App.js</code> and save to reload.
                 </p>
-                <button className='add-mountain' onClick={this.addMountain}>{this.state.add ? 'Collapse Form': 'Add Mountain'}</button>
-                <AddMountain /> 
+                <AddMountain 
+                    handleMountainNameChange={this.props.handleMountainNameChange}
+                    handleMountainElevationChange={this.props.handleMountainElevationChange}
+                    handleMountainRangeChange={this.props.handleMountainRangeChange}
+                    handleMountainImgChange={this.props.handleMountainImgChange}
+                    handleMountainRankChange={this.props.handleMountainRankChange}
+                    handleSubmit={this.props.handleSubmit}
+                    handleAddShareholder={this.props.handleAddShareholder}
+                    newMountains={this.props.newMountains}
+                    handleRemoveMountain={this.props.handleRemoveMountain}
+                /> 
             </header>
         )
     }
