@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import MountainRange from './components/MountainRange';
 import Nav from './components/Nav'
+import { Dropdown } from 'semantic-ui-react'
 const url = 'http://localhost:3111'
 
 
@@ -98,6 +99,16 @@ class App extends Component {
 
 
   render() {
+    const structureDropdown = (mountain) => {
+      return mountain.map(mountain => {
+          return(
+              {
+                  text: mountain.name,
+                  value: mountain.id
+              }
+          )
+      })
+  }
     return (
       <div className="App">
         <Nav 
@@ -110,7 +121,9 @@ class App extends Component {
           handleAddMountain={this.handleAddMountain}
           newMountains={this.state.newMountains}
           handleRemoveMountain={this.handleRemoveMountain}
+          mountains={this.state.mountains}
         />
+        <Dropdown placeholder='Mountain' fluid multiple search selection options={structureDropdown(this.state.mountains)} />
         <div className='mountain-range'>
           <MountainRange mountains={this.state.mountains} />
         </div>

@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
         table.integer('elevation')
         table.string('range')
         table.integer('rank')
-        table.string('imageUrl', 100)
+        table.string('imageUrl', 250)
     })
 };
 

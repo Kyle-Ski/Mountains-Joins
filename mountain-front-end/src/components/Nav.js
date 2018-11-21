@@ -29,6 +29,7 @@ class Nav extends Component {
                     handleAddMountain={this.props.handleAddMountain}
                     newMountains={this.props.newMountains}
                     handleRemoveMountain={this.props.handleRemoveMountain}
+                    mountains={this.props.mountains}
                 /> 
             </header>
         )

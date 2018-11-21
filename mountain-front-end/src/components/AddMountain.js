@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-const AddMountain = ({handleRemoveMountain, newMountains, handleMountainNameChange, handleMountainElevationChange, handleMountainRangeChange, handleMountainImgChange, handleMountainRankChange, handleSubmit, handleAddMountain}) => {
+
+const AddMountain = ({mountains, handleRemoveMountain, newMountains, handleMountainNameChange, handleMountainElevationChange, handleMountainRangeChange, handleMountainImgChange, handleMountainRankChange, handleSubmit, handleAddMountain}) => {
 
         return (
             <div>

@@ -39,6 +39,11 @@
   justify-content: center;
 }
 
+.mountain-img {
+  max-width: 800px;
+  max-height: 600px;
+}
+
 .add-mountain {
   width: 10vw;
   height: 8vh;
