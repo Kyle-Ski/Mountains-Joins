@@ -20,6 +20,11 @@ class App extends Component {
       .then(data => {
         this.setState({mountains: data.mountains})
       })
+      fetch('http://localhost:3111/user_mountains')
+      .then(response => response.json())
+      .then(data => {
+        this.setState({userMountains: data.mountains})
+      })
   } 
 
   handleUserMountainAdd = (idx) => (evt) => {
@@ -86,7 +91,7 @@ class App extends Component {
       evt.preventDefault()
       const thingsToAdd  = this.state.newMountains;
       const data = JSON.stringify(thingsToAdd.map(item => (item)))
-      fetch(`${url}/mountains`, {
+      fetch(`${url}/user_mountains`, {
           method: 'POST',
           mode: 'cors',
           headers: {
@@ -95,7 +100,7 @@ class App extends Component {
           body: data
       })
           .then(response => response.json())
-          .then(addingMountains => this.setState({mountains: this.state.mountains.concat(addingMountains.mountain)}))
+          .then(addingMountains => this.setState({userMountains: this.state.userMountains.concat(addingMountains.mountain)}))
   }
 
   handleAddMountain = (e) => {
@@ -147,7 +152,7 @@ class App extends Component {
         />
         <Dropdown placeholder='Mountain' fluid multiple search selection options={structureDropdown(this.state.mountains)} />
         <div className='mountain-range'>
-          <MountainRange mountains={this.state.mountains} />
+          <MountainRange mountains={this.state.userMountains} />
         </div>
       </div>
     );
