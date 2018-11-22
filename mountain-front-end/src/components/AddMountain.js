@@ -1,5 +1,13 @@
 import React from 'react'
 import {Dropdown} from 'semantic-ui-react'
+
+const style = {
+    dropdown: {
+        width: '25vw',
+        margin: '10px'
+    }
+}
+
 const AddMountain = ({
         mountains, 
         handleRemoveMountain, 
@@ -10,7 +18,9 @@ const AddMountain = ({
         handleMountainImgChange, 
         handleMountainRankChange, 
         handleSubmit,
-        handleAddMountain
+        handleAddMountain,
+        handleUserMountainAdd,
+        consoleL
     }) => {
 
         const structureDropdown = (mountain) => {
@@ -18,7 +28,7 @@ const AddMountain = ({
                 return(
                     {
                         text: mountain.name,
-                        value: mountain.id
+                        value: mountain.id,
                     }
                 )
             })
@@ -27,11 +37,11 @@ const AddMountain = ({
         return (
             <div>
                 <button className='add-mountain' onClick={handleAddMountain}>+ Another Mountain</button>
-                {/* <button className='add-mountain' onClick={consoleL}>console log new mountains</button> */}
+                <button className='add-mountain' onClick={consoleL}>console log new mountains</button>
                 <form onSubmit={handleSubmit} >
             {newMountains.map((mountain, idx)=>(
                 <div className='add-m-form'>
-                    <Dropdown placeholder='Mountain' fluid multiple search selection options={structureDropdown(mountains)} />
+                    <Dropdown onChange={handleUserMountainAdd(idx)} style={style.dropdown} placeholder='Mountain' fluid search selection options={structureDropdown(mountains)} />
                     {/* <input className='input-group' onChange={handleMountainNameChange(idx)} placeholder={`Mountain ${idx + 1} Name`} value={mountain.name}/>
                     <label>Elevation:</label>
                     <input className='input-group' onChange={handleMountainElevationChange(idx)} type='number' min='0' value={mountain.elevation}/>

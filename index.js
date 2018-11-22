@@ -4,16 +4,17 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const port = process.env.PORT || 3111
 const mountainRoutes = require('./routes/mountainRoutes')
-
+const userRoutes = require('./routes/userRoutes')
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cors())
 
 app.get('/', (req, res, next) => res.json({
-    "Mountains": `http://localhost:${port}/mountains`
+    "Mountains": `http://localhost:${port}/mountains`,
+    "User Mountains": `http://localhost:${port}/user_mountains`
 }))
 app.use('/mountains', mountainRoutes)
-
+app.use('/user_mountains', userRoutes)
 
 
 

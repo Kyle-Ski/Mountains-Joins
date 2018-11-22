@@ -10,7 +10,8 @@ class App extends Component {
 
   state = {
     mountains: [],
-    newMountains: [{name: '', elevation: '', range: '', rank: '', imageUrl: ''}]
+    newMountains: [{name: '', elevation: '', range: '', rank: '', imageUrl: ''}],
+    userMountains: [],
   }
 
   async componentDidMount(){
@@ -20,6 +21,25 @@ class App extends Component {
         this.setState({mountains: data.mountains})
       })
   } 
+
+  handleUserMountainAdd = (idx) => (evt) => {
+    // const selected = this.state.mountains.filter((mountain) => {
+    //   return mountain.name === evt.target.innerText
+    // })
+    const elevation = this.state.mountains.filter(mountain => mountain.name === evt.target.innerText)[0].elevation
+    const range = this.state.mountains.filter(mountain => mountain.name === evt.target.innerText)[0].range
+    const rank = this.state.mountains.filter(mountain => mountain.name === evt.target.innerText)[0].rank
+    const imageUrl = this.state.mountains.filter(mountain => mountain.name === evt.target.innerText)[0].imageUrl
+
+    const mountains = this.state.newMountains.map((mountain, sidx) => {
+      if (idx !== sidx){
+        return mountain
+      } else {
+        return { ...mountain, name: evt.target.innerText, elevation: elevation, range: range, rank: rank, imageUrl: imageUrl }
+      }
+    })
+    this.setState({newMountains: mountains})
+  }
 
   handleMountainNameChange = (idx) => (evt) => {
       const mountains = this.state.newMountains.map((mountain, sidx) => {
@@ -122,6 +142,8 @@ class App extends Component {
           newMountains={this.state.newMountains}
           handleRemoveMountain={this.handleRemoveMountain}
           mountains={this.state.mountains}
+          handleUserMountainAdd={this.handleUserMountainAdd}
+          consoleL={this.consoleL}
         />
         <Dropdown placeholder='Mountain' fluid multiple search selection options={structureDropdown(this.state.mountains)} />
         <div className='mountain-range'>

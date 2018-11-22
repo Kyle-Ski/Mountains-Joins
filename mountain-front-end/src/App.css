@@ -59,13 +59,16 @@
 }
 
 .minus-mountain {
+  margin-left: 10px;
+  width: 8vh;
+  margin-top: 15px;
   height: 8vh;
   margin-bottom: 10px;
   border-radius: 5px;
   background-color: #80D8F7;
   border: 2px solid #4F98F6;
   color: white;
-  font-size: 15px;
+  font-size: 30px;
   text-shadow: black 1px 1px 1px;
   transition: transform 0.5s;
 }
@@ -86,6 +89,10 @@
 .add-m-form>input {
   padding: 10px;
   margin: 5px;
+}
+
+div.add-m-form {
+  display: flex;
 }
 
 @keyframes App-logo-spin {
