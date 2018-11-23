@@ -58,6 +58,34 @@
   margin: 5px;
 }
 
+.add-mountain:hover{
+  transform: scale(1.1);
+  background-color: #4F98F6;
+  border: 2px solid #80D8F7;
+
+}
+
+.delete-mountain {
+  width: 10vw;
+  height: 8vh;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: lightcoral;
+  border: 2px solid red;
+  color: white;
+  font-size: 15px;
+  text-shadow: black 1px 1px 1px;
+  transition: transform 0.5s;
+  margin: 5px;
+}
+
+.delete-mountain:hover{
+  transform: scale(1.1);
+  background-color: red;
+  border: 2px solid lightcoral;
+
+}
+
 .minus-mountain {
   margin-left: 10px;
   width: 8vh;
@@ -82,9 +110,6 @@
   margin: 5px;
 }
 
-.add-mountain:hover{
-  transform: scale(1.1);
-}
 
 .add-m-form>input {
   padding: 10px;

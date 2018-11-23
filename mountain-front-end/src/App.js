@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import MountainRange from './components/MountainRange';
 import Nav from './components/Nav'
-import { Dropdown } from 'semantic-ui-react'
 const url = 'http://localhost:3111'
 
 
@@ -12,15 +11,16 @@ class App extends Component {
     mountains: [],
     newMountains: [{name: '', elevation: '', range: '', rank: '', imageUrl: ''}],
     userMountains: [],
+    itemToDelete: null,
   }
 
   async componentDidMount(){
-    fetch('http://localhost:3111/mountains')
+    fetch(`${url}/mountains`)
       .then(response => response.json())
       .then(data => {
         this.setState({mountains: data.mountains})
       })
-      fetch('http://localhost:3111/user_mountains')
+      fetch(`${url}/user_mountains`)
       .then(response => response.json())
       .then(data => {
         this.setState({userMountains: data.mountains})
@@ -28,79 +28,38 @@ class App extends Component {
   } 
 
   handleUserMountainAdd = (idx) => (evt) => {
-    // const selected = this.state.mountains.filter((mountain) => {
-    //   return mountain.name === evt.target.innerText
-    // })
-    const elevation = this.state.mountains.filter(mountain => mountain.name === evt.target.innerText)[0].elevation
-    const range = this.state.mountains.filter(mountain => mountain.name === evt.target.innerText)[0].range
-    const rank = this.state.mountains.filter(mountain => mountain.name === evt.target.innerText)[0].rank
-    const imageUrl = this.state.mountains.filter(mountain => mountain.name === evt.target.innerText)[0].imageUrl
-
-    const mountains = this.state.newMountains.map((mountain, sidx) => {
-      if (idx !== sidx){
-        return mountain
-      } else {
-        return { ...mountain, name: evt.target.innerText, elevation: elevation, range: range, rank: rank, imageUrl: imageUrl }
-      }
-    })
-    this.setState({newMountains: mountains})
-  }
-
-  handleMountainNameChange = (idx) => (evt) => {
+    if (!evt.target.type){
+      const elevation = this.state.mountains.filter(mountain => mountain.name === evt.target.innerText)[0].elevation
+      const range = this.state.mountains.filter(mountain => mountain.name === evt.target.innerText)[0].range
+      const rank = this.state.mountains.filter(mountain => mountain.name === evt.target.innerText)[0].rank
+      const imageUrl = this.state.mountains.filter(mountain => mountain.name === evt.target.innerText)[0].imageUrl
       const mountains = this.state.newMountains.map((mountain, sidx) => {
-          if (idx !== sidx) return mountain;
-          return { ...mountain, name: evt.target.value };
-          });
-      
-          this.setState({ newMountains: mountains });
-  }
-  handleMountainElevationChange = (idx) => (evt) => {
-      const mountains = this.state.newMountains.map((mountain, sidx) => {
-          if (idx !== sidx) return mountain;
-          return { ...mountain, elevation: evt.target.value };
-          });
-      
-          this.setState({ newMountains: mountains });
-  }
-  handleMountainRangeChange = (idx) => (evt) => {
-      const mountains = this.state.newMountains.map((mountain, sidx) => {
-          if (idx !== sidx) return mountain;
-          return { ...mountain, range: evt.target.value };
-          });
-      
-          this.setState({ newMountains: mountains });
-  }
-  handleMountainImgChange = (idx) => (evt) => {
-      const mountains = this.state.newMountains.map((mountain, sidx) => {
-          if (idx !== sidx) return mountain;
-          return { ...mountain, imageUrl: evt.target.value };
-          });
-      
-          this.setState({ newMountains: mountains });
-  }
-  handleMountainRankChange = (idx) => (evt) => {
-      const mountains = this.state.newMountains.map((mountain, sidx) => {
-          if (idx !== sidx) return mountain;
-          return { ...mountain, rank: evt.target.value };
-          });
-      
-          this.setState({ newMountains: mountains });
+        if (idx !== sidx){
+          return mountain
+        } else {
+          return { ...mountain, name: evt.target.innerText, elevation: elevation, range: range, rank: rank, imageUrl: imageUrl }
+        }
+      })
+      this.setState({newMountains: mountains})
+    } 
   }
       
   handleSubmit = (evt) => {
-      evt.preventDefault()
+    evt.preventDefault()
+    if(this.state.newMountains.name !== undefined){
       const thingsToAdd  = this.state.newMountains;
-      const data = JSON.stringify(thingsToAdd.map(item => (item)))
-      fetch(`${url}/user_mountains`, {
-          method: 'POST',
-          mode: 'cors',
-          headers: {
+        const data = JSON.stringify(thingsToAdd.map(item => (item)))
+        fetch(`${url}/user_mountains`, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
               "Content-Type": "application/json; charset=utf-8"
-          },
-          body: data
-      })
+            },
+            body: data
+          })
           .then(response => response.json())
           .then(addingMountains => this.setState({userMountains: this.state.userMountains.concat(addingMountains.mountain)}))
+        } 
   }
 
   handleAddMountain = (e) => {
@@ -117,6 +76,26 @@ class App extends Component {
       });
   }
 
+  selectMountainId = (e) => {
+    let mountainId = this.state.userMountains.filter(mountain => mountain.name === e.target.innerText)[0].id
+    this.setState({itemToDelete: mountainId})
+  } 
+
+  deleteMountain = async (e) => {
+    e.preventDefault()
+    fetch(`${url}/user_mountains/${this.state.itemToDelete}`, {
+      method: 'DELETE',
+      mode: 'cors'
+    })
+      .then(response => response.json())
+      .then(this.deleteHandler)
+  }
+  
+
+  deleteHandler = (data) => {
+    let newMountains = this.state.userMountains.filter(item => item.id !== data.deleted.id)
+    this.setState({userMountains: newMountains})
+  }
 
   consoleL = () => {
       console.log(this.state.newMountains)
@@ -124,24 +103,9 @@ class App extends Component {
 
 
   render() {
-    const structureDropdown = (mountain) => {
-      return mountain.map(mountain => {
-          return(
-              {
-                  text: mountain.name,
-                  value: mountain.id
-              }
-          )
-      })
-  }
     return (
       <div className="App">
         <Nav 
-          handleMountainNameChange={this.handleMountainNameChange}
-          handleMountainElevationChange={this.handleMountainElevationChange}
-          handleMountainRangeChange={this.handleMountainRangeChange}
-          handleMountainImgChange={this.handleMountainImgChange}
-          handleMountainRankChange={this.handleMountainRankChange}
           handleSubmit={this.handleSubmit}
           handleAddMountain={this.handleAddMountain}
           newMountains={this.state.newMountains}
@@ -149,8 +113,10 @@ class App extends Component {
           mountains={this.state.mountains}
           handleUserMountainAdd={this.handleUserMountainAdd}
           consoleL={this.consoleL}
+          deleteMountain={this.deleteMountain}
+          selectMountainId={this.selectMountainId}
+          userMountains={this.state.userMountains}
         />
-        <Dropdown placeholder='Mountain' fluid multiple search selection options={structureDropdown(this.state.mountains)} />
         <div className='mountain-range'>
           <MountainRange mountains={this.state.userMountains} />
         </div>

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import logo from '../logo.svg'
 import AddMountain from './AddMountain'
+import DeleteMountain from './DeleteMountain'
+
 class Nav extends Component {
 
     state={
@@ -20,11 +22,6 @@ class Nav extends Component {
                     Edit <code>src/App.js</code> and save to reload.
                 </p>
                 <AddMountain 
-                    handleMountainNameChange={this.props.handleMountainNameChange}
-                    handleMountainElevationChange={this.props.handleMountainElevationChange}
-                    handleMountainRangeChange={this.props.handleMountainRangeChange}
-                    handleMountainImgChange={this.props.handleMountainImgChange}
-                    handleMountainRankChange={this.props.handleMountainRankChange}
                     handleSubmit={this.props.handleSubmit}
                     handleAddMountain={this.props.handleAddMountain}
                     newMountains={this.props.newMountains}
@@ -33,6 +30,13 @@ class Nav extends Component {
                     handleUserMountainAdd={this.props.handleUserMountainAdd}
                     consoleL={this.props.consoleL}
                 /> 
+                <DeleteMountain 
+                    mountains={this.props.mountains} 
+                    selectMountainId={this.props.selectMountainId}
+                    deleteMountain={this.props.deleteMountain}
+                    userMountains={this.props.userMountains}
+                />
+
             </header>
         )
     }

@@ -8,13 +8,13 @@ const getAll = (req, res, next) => {
         .catch(err => console.log('ERROR: ', err))
 }
 const getOne = (req, res, next) => {
-    let rank = req.params.rank
-    if(!Number(rank)){
+    let id = req.params.rank
+    if(!Number(id)){
         res.json({error: 'Please enter a valid rank number'})
     } else {
         return knex('mountain')
             .select('*')
-            .where({rank: rank})
+            .where({id: id})
             .then(mountain => {
                 if(!mountain.length){
                     return res.json({error: 'That rank doesn\'t exist yet'})
